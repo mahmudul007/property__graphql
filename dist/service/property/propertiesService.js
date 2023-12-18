@@ -12,8 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteProperty = exports.updateProperty = exports.getPropertyById = exports.getAllProperties = exports.createProperty = void 0;
 const properperty_1 = __importDefault(require("../../model/properperty"));
 const createProperty = (property) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(property);
     try {
         const newProperty = new properperty_1.default(property);
         return yield newProperty.save();
@@ -22,6 +24,7 @@ const createProperty = (property) => __awaiter(void 0, void 0, void 0, function*
         throw error;
     }
 });
+exports.createProperty = createProperty;
 const getAllProperties = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         return yield properperty_1.default.find({});
@@ -30,6 +33,7 @@ const getAllProperties = () => __awaiter(void 0, void 0, void 0, function* () {
         throw error;
     }
 });
+exports.getAllProperties = getAllProperties;
 const getPropertyById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         return yield properperty_1.default.findById(id);
@@ -38,18 +42,22 @@ const getPropertyById = (id) => __awaiter(void 0, void 0, void 0, function* () {
         throw error;
     }
 });
+exports.getPropertyById = getPropertyById;
 const updateProperty = (id, property) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const propertyToUpdate = yield properperty_1.default.findByIdAndUpdate(id);
+        const propertyToUpdate = yield properperty_1.default.findByIdAndUpdate(id, property);
         if (!propertyToUpdate) {
             throw new Error("Property not found");
         }
+        return propertyToUpdate;
     }
     catch (error) {
         throw error;
     }
 });
+exports.updateProperty = updateProperty;
 const deleteProperty = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(id);
     try {
         const propertyToDelete = yield properperty_1.default.findByIdAndDelete(id);
         if (!propertyToDelete) {
@@ -61,10 +69,4 @@ const deleteProperty = (id) => __awaiter(void 0, void 0, void 0, function* () {
         throw error;
     }
 });
-exports.default = {
-    createProperty,
-    getAllProperties,
-    getPropertyById,
-    updateProperty,
-    deleteProperty
-};
+exports.deleteProperty = deleteProperty;

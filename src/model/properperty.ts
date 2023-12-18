@@ -1,36 +1,42 @@
+
 import { time } from "console";
 import mongoose from "mongoose";
+import { Ipoperty } from "../lib/propertyInterface";
 
-const useSchema = new mongoose.Schema({
+
+const useSchema = new mongoose.Schema<Ipoperty>({
 
     name: {
         type: String,
         required: true
     },
     
-    bedroom: {
+    bedrooms: {
         type: Number,
         required: true
     },
-    bathroom: {
+    bathrooms: {
         type: Number,
         required: true
     },
-    type: {
-        type: Array,
-        default: [],
-        comment: "house, apartment, hotel, room, etc"
-    },
+    property_type: [],
     
     description: {
         type: String,
         default: ""
     },
    
-    images: {
-        type: Array,
-        default: []
-    },
+    images:[{
+        main_image:[
+            {
+               url: {
+                type: String,
+                required: true
+               }
+            }
+        ]
+        }
+    ],
 
     host: {
         type: mongoose.Schema.Types.ObjectId,
@@ -63,19 +69,19 @@ const useSchema = new mongoose.Schema({
             },
             guest_capacity: [
                 {
-                  child: {
+                  childs: {
                       type: Number,
                       required: true
                   },
-                  adult: {
+                  adults: {
                       type: Number,
                       required: true
                   },
-                  infant: {
+                  infants: {
                       type: Number,
                       required: true
                   },
-                  pet : {
+                  pets : {
                       type: Number,
                       required: true
                   }
@@ -136,6 +142,10 @@ const useSchema = new mongoose.Schema({
                         type: Number,
                         required: true
                     },
+                    percentage_discount: {
+                        type: Number,
+                        required: true
+                    },
                     three_day: {
                         type: Number,
                         required: true
@@ -158,7 +168,7 @@ const useSchema = new mongoose.Schema({
                 type: String,
                 default: ""
             },
-            booked_date: [
+            booked_dates: [
                 {
                     last_update: {
                         type: Date,
@@ -170,9 +180,9 @@ const useSchema = new mongoose.Schema({
                     },
                 }
             ],
-            images:[
+            room_images:[
                 {
-                    cover_image:[
+                    cover_images:[
                         {
                            url: {
                             type: String,
@@ -185,7 +195,7 @@ const useSchema = new mongoose.Schema({
                         }
                     ]
                     ,
-                    room_image: [
+                    room_internal_images: [
                         {
                             url: {
                              type: String,
@@ -223,6 +233,10 @@ const useSchema = new mongoose.Schema({
             country: {
                 type: String,
                 required: true
+            },
+            zipcode: {
+                type: String,
+                required: true
             }
         }
     ],
@@ -233,4 +247,4 @@ const useSchema = new mongoose.Schema({
     },
     
 });
-export default mongoose.model("Property", useSchema);
+export default mongoose.model<Ipoperty>("Property", useSchema);

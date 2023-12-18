@@ -7,4 +7,4 @@ exports.mongo_uri = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.mongo_uri = process.env.MONGO_URI;
-console.log(exports.mongo_uri);
+// console.log(mongo_uri)

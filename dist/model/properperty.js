@@ -9,27 +9,30 @@ const useSchema = new mongoose_1.default.Schema({
         type: String,
         required: true
     },
-    bedroom: {
+    bedrooms: {
         type: Number,
         required: true
     },
-    bathroom: {
+    bathrooms: {
         type: Number,
         required: true
     },
-    type: {
-        type: Array,
-        default: [],
-        comment: "house, apartment, hotel, room, etc"
-    },
+    property_type: [],
     description: {
         type: String,
         default: ""
     },
-    images: {
-        type: Array,
-        default: []
-    },
+    images: [{
+            main_image: [
+                {
+                    url: {
+                        type: String,
+                        required: true
+                    }
+                }
+            ]
+        }
+    ],
     host: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "User",
@@ -60,19 +63,19 @@ const useSchema = new mongoose_1.default.Schema({
             },
             guest_capacity: [
                 {
-                    child: {
+                    childs: {
                         type: Number,
                         required: true
                     },
-                    adult: {
+                    adults: {
                         type: Number,
                         required: true
                     },
-                    infant: {
+                    infants: {
                         type: Number,
                         required: true
                     },
-                    pet: {
+                    pets: {
                         type: Number,
                         required: true
                     }
@@ -128,6 +131,10 @@ const useSchema = new mongoose_1.default.Schema({
                         type: Number,
                         required: true
                     },
+                    percentage_discount: {
+                        type: Number,
+                        required: true
+                    },
                     three_day: {
                         type: Number,
                         required: true
@@ -150,7 +157,7 @@ const useSchema = new mongoose_1.default.Schema({
                 type: String,
                 default: ""
             },
-            booked_date: [
+            booked_dates: [
                 {
                     last_update: {
                         type: Date,
@@ -162,9 +169,9 @@ const useSchema = new mongoose_1.default.Schema({
                     },
                 }
             ],
-            images: [
+            room_images: [
                 {
-                    cover_image: [
+                    cover_images: [
                         {
                             url: {
                                 type: String,
@@ -176,7 +183,7 @@ const useSchema = new mongoose_1.default.Schema({
                             }
                         }
                     ],
-                    room_image: [
+                    room_internal_images: [
                         {
                             url: {
                                 type: String,
@@ -207,6 +214,10 @@ const useSchema = new mongoose_1.default.Schema({
                 required: true
             },
             country: {
+                type: String,
+                required: true
+            },
+            zipcode: {
                 type: String,
                 required: true
             }

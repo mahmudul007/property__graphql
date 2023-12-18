@@ -16,10 +16,12 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const express4_1 = require("@apollo/server/express4");
 const graphql_1 = __importDefault(require("./graphql"));
+const db_1 = require("./db/db");
 function createServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, express_1.default)();
         const PORT = 3000;
+        (0, db_1.connectDb)();
         app.use((0, cors_1.default)(), express_1.default.json());
         yield graphql_1.default.start();
         app.use("/graphql", (0, express4_1.expressMiddleware)(graphql_1.default));

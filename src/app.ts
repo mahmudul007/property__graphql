@@ -2,10 +2,12 @@ import express from "express";
 import cors from "cors";
 import { expressMiddleware } from "@apollo/server/express4";
 import server from "./graphql";
+import {connectDb} from "./db/db";
 
 async function createServer() {
   const app = express();
   const PORT = 3000;
+ connectDb();
 
   app.use(cors(), express.json());
 

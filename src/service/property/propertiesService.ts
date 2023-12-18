@@ -1,8 +1,10 @@
 import Property from "../../model/properperty";
+import { Ipoperty } from "../../lib/propertyInterface";
 
-const createProperty = async (property: any) => {
+const createProperty = async (property: Ipoperty) => {
+    console.log(property)
     try {
-        const newProperty = new Property(property);
+        const newProperty:Ipoperty = new Property(property);
         return await newProperty.save();
     } catch (error) {
         throw error;
@@ -25,13 +27,14 @@ const getPropertyById = async (id: string) => {
     }
 }
 
-const updateProperty = async (id: string, property: any) => {
+const updateProperty = async (id: string,property: Ipoperty) => {
 
     try {
-        const propertyToUpdate = await Property.findByIdAndUpdate(id);
+        const propertyToUpdate = await Property.findByIdAndUpdate(id , property);
         if(!propertyToUpdate){
             throw new Error("Property not found");
         }
+        return propertyToUpdate;
         
         
     } catch (error) {
@@ -41,6 +44,7 @@ const updateProperty = async (id: string, property: any) => {
 }
 
 const deleteProperty = async (id: string) => {
+    console.log(id)
     try {
         const propertyToDelete = await Property.findByIdAndDelete(id);
         if(!propertyToDelete){
@@ -51,7 +55,7 @@ const deleteProperty = async (id: string) => {
         throw error;
     }
 }
-export default {
+export  {
     createProperty,
     getAllProperties,
     getPropertyById,
