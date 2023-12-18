@@ -17,12 +17,17 @@ const cors_1 = __importDefault(require("cors"));
 const express4_1 = require("@apollo/server/express4");
 const graphql_1 = __importDefault(require("./graphql"));
 const db_1 = require("./db/db");
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 function createServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, express_1.default)();
         const PORT = 3000;
         (0, db_1.connectDb)();
         app.use((0, cors_1.default)(), express_1.default.json());
+        app.use((0, express_fileupload_1.default)({
+            useTempFiles: true,
+            tempFileDir: '/tmp/'
+        }));
         yield graphql_1.default.start();
         app.use("/graphql", (0, express4_1.expressMiddleware)(graphql_1.default));
         app.listen(PORT, () => {
