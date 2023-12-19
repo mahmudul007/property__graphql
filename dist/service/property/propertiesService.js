@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProperty = exports.updateProperty = exports.getPropertyById = exports.getAllProperties = exports.createProperty = void 0;
-const properperty_1 = __importDefault(require("../../model/properperty"));
+exports.PropertyWithSubProperty = exports.deleteProperty = exports.updateProperty = exports.getPropertyById = exports.getAllProperties = exports.createProperty = void 0;
+const property_1 = __importDefault(require("../../model/property"));
+const subproperty_1 = __importDefault(require("../../model/subproperty"));
 const createProperty = (property) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(property);
     try {
-        const newProperty = new properperty_1.default(property);
+        const newProperty = new property_1.default(property);
         return yield newProperty.save();
     }
     catch (error) {
@@ -27,7 +28,7 @@ const createProperty = (property) => __awaiter(void 0, void 0, void 0, function*
 exports.createProperty = createProperty;
 const getAllProperties = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return yield properperty_1.default.find({});
+        return yield property_1.default.find({});
     }
     catch (error) {
         throw error;
@@ -36,16 +37,32 @@ const getAllProperties = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.getAllProperties = getAllProperties;
 const getPropertyById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return yield properperty_1.default.findById(id);
+        return yield property_1.default.findById(id);
     }
     catch (error) {
         throw error;
     }
 });
 exports.getPropertyById = getPropertyById;
+const PropertyWithSubProperty = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const property = yield property_1.default.findById(id);
+        if (!property) {
+            throw new Error("Property not found");
+        }
+        const subProperties = yield subproperty_1.default.find({ property_id: property._id });
+        console.log("subProperties", subProperties);
+        return { property, subProperties };
+    }
+    catch (error) {
+    }
+});
+exports.PropertyWithSubProperty = PropertyWithSubProperty;
 const updateProperty = (id, property) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const propertyToUpdate = yield properperty_1.default.findByIdAndUpdate(id, property);
+        const propertyToUpdate = yield property_1.default.findByIdAndUpdate(id, property, {
+            new: true,
+        });
         if (!propertyToUpdate) {
             throw new Error("Property not found");
         }
@@ -59,7 +76,7 @@ exports.updateProperty = updateProperty;
 const deleteProperty = (id) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(id);
     try {
-        const propertyToDelete = yield properperty_1.default.findByIdAndDelete(id);
+        const propertyToDelete = yield property_1.default.findByIdAndDelete(id);
         if (!propertyToDelete) {
             throw new Error("Property not found");
         }
