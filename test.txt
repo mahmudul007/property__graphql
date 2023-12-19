@@ -8,7 +8,10 @@ import { typeDefs } from './graphql/typedefs/typeDefs';
 import { resolvers } from './graphql/resolvers/resolvers';
 
 
-
+MONGO_URI=mongodb+srv://airvila:oW2Zw26tOa6WawKa@cluster0.teo92.mongodb.net/BookingEngine?retryWrites=true&w=majority
+CLOUD_NAME=dvn77fqtn
+API_KEY=312531685274143
+API_SECRET=CKvFHN9qsj3hZqlLw-QvOjtmqcs
 async function startApolloServer() {
 
 const app = express();
